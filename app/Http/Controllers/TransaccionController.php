@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cliente;
+use App\Models\Trabajador;
 use App\Models\Transaccion;
 use Illuminate\Http\Request;
 
@@ -34,8 +36,19 @@ class TransaccionController extends Controller
         ]);
 
         $nuevoTransaccion = new Transaccion();
-        $nuevoTransaccion->id_cliente = $request->id_cliente;
-        $nuevoTransaccion->id_trabajador = $request->id_trabajador;
+        $ClienteAll = Cliente::where('state', '=', 1)->where('id', '=', $request->id_cliente)->get();
+        if (count($ClienteAll) == 0) {
+            return "No existe un cliente con ese 'id_cliente' o esta desactivado, porfavor ingrese un 'id_cliente' valido.";
+        } else {
+            $nuevoTransaccion->id_cliente = $request->id_cliente;
+        }
+        $TrabajadorAll = Trabajador::where('state', '=', 1)->where('id', '=', $request->id_trabajador)->get();
+        if (count($TrabajadorAll) == 0) {
+            return "No existe un cliente con ese 'id_trabajador' o esta desactivado, porfavor ingrese un 'id_trabajador' valido.";
+        } else {
+            $nuevoTransaccion->id_trabajador = $request->id_trabajador;
+        }
+
         $nuevoTransaccion->fecha = $request->fecha;
         $nuevoTransaccion->tipo_comprobante = $request->tipo_comprobante;
         $nuevoTransaccion->serie = $request->serie;
@@ -68,8 +81,19 @@ class TransaccionController extends Controller
             $updateTransaccion = Transaccion::find($id);
             $updateTransaccion = Transaccion::find($id);
 
-            $updateTransaccion->id_cliente = $request->id_cliente;
-            $updateTransaccion->id_trabajador = $request->id_trabajador;
+            $ClienteAll = Cliente::where('state', '=', 1)->where('id', '=', $request->id_cliente)->get();
+            if (count($ClienteAll) == 0) {
+                return "No existe un cliente con ese 'id_cliente' o esta desactivado, porfavor ingrese un 'id_cliente' valido.";
+            } else {
+                $updateTransaccion->id_cliente = $request->id_cliente;
+            }
+            $TrabajadorAll = Trabajador::where('state', '=', 1)->where('id', '=', $request->id_trabajador)->get();
+            if (count($TrabajadorAll) == 0) {
+                return "No existe un cliente con ese 'id_trabajador' o esta desactivado, porfavor ingrese un 'id_trabajador' valido.";
+            } else {
+                $updateTransaccion->id_trabajador = $request->id_trabajador;
+            }
+
             $updateTransaccion->fecha = $request->fecha;
             $updateTransaccion->tipo_comprobante = $request->tipo_comprobante;
             $updateTransaccion->serie = $request->serie;

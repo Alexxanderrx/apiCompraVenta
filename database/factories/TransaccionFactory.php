@@ -24,7 +24,7 @@ class TransaccionFactory extends Factory
             'fecha' => fake()->date(),
             'tipo_comprobante' => fake()->randomElement($array = array('Factura', 'Boleta de Venta', 'Ticket')),
             'serie' => fake()->randomNumber($nbDigits = 8, $strict = false),
-            'igv' => fake()->randomFloat($nbMaxDecimals  = 2, $min = 2, $max = 1),
+            'igv' => fake()->randomFloat($nbMaxDecimals  = 2, $min = 0, $max = 1),
             'tipo' => fake()->randomElement($array = array('venta', 'compra')),
             'state' => 1,
         ];

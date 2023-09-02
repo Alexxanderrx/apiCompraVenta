@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('venta_detalles', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('id_transaccion');
+            $table->foreign('id_transaccion')->references('id')->on('transaccions');
+
+            $table->string('cantidad');
+            $table->string('precio_venta');
+            $table->string('descuento');
+            $table->string('state');
             $table->timestamps();
         });
     }
