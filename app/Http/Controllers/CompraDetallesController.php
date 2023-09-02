@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Articulo;
 use App\Models\CompraDetalles;
 use App\Models\Transaccion;
 use Illuminate\Http\Request;
@@ -26,6 +27,7 @@ class CompraDetallesController extends Controller
     {
         $request->validate([
             'id_transaccion' => 'required',
+            'id_articulo' => 'required',
             'cantidad' => 'required',
             'precio_compra' => ['required', 'string'],
             'descuento' => ['required'],
@@ -38,6 +40,13 @@ class CompraDetallesController extends Controller
             return "No existe un curso con ese 'id_transaccion' o esta desactivado, porfavor ingrese un 'id_transaccion' valido.";
         } else {
             $nuevoCompraDetalles->id_transaccion = $request->id_transaccion;
+        }
+
+        $ArticuloAll = Articulo::where('state', '=', 1)->where('id', '=', $request->id_articulo)->get();
+        if (count($ArticuloAll) == 0) {
+            return "No existe un curso con ese 'id_articulo' o esta desactivado, porfavor ingrese un 'id_articulo' valido.";
+        } else {
+            $nuevoCompraDetalles->id_articulo = $request->id_articulo;
         }
 
         $nuevoCompraDetalles->cantidad = $request->cantidad;
@@ -67,6 +76,13 @@ class CompraDetallesController extends Controller
                 return "No existe un curso con ese 'id_transaccion' o esta desactivado, porfavor ingrese un 'id_transaccion' valido.";
             } else {
                 $updateCompraDetalles->id_transaccion = $request->id_transaccion;
+            }
+
+            $ArticuloAll = Articulo::where('state', '=', 1)->where('id', '=', $request->id_articulo)->get();
+            if (count($ArticuloAll) == 0) {
+                return "No existe un curso con ese 'id_articulo' o esta desactivado, porfavor ingrese un 'id_articulo' valido.";
+            } else {
+                $updateCompraDetalles->id_articulo = $request->id_articulo;
             }
 
             $updateCompraDetalles->cantidad = $request->cantidad;

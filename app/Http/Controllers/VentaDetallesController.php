@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Articulo;
 use App\Models\Transaccion;
 use App\Models\VentaDetalles;
 use Illuminate\Http\Request;
@@ -26,6 +27,7 @@ class VentaDetallesController extends Controller
     {
         $request->validate([
             'id_transaccion' => 'required',
+            'id_articulo' => 'required',
             'cantidad' => 'required',
             'precio_venta' => ['required', 'string'],
             'descuento' => ['required'],
@@ -40,6 +42,13 @@ class VentaDetallesController extends Controller
             $nuevoVentaDetalles->id_transaccion = $request->id_transaccion;
         }
 
+        $ArticuloAll = Articulo::where('state', '=', 1)->where('id', '=', $request->id_articulo)->get();
+        if (count($ArticuloAll) == 0) {
+            return "No existe un curso con ese 'id_articulo' o esta desactivado, porfavor ingrese un 'id_articulo' valido.";
+        } else {
+            $nuevoVentaDetalles->id_articulo = $request->id_articulo;
+        }
+
         $nuevoVentaDetalles->cantidad = $request->cantidad;
         $nuevoVentaDetalles->precio_venta = $request->precio_venta;
         $nuevoVentaDetalles->descuento = $request->descuento;
@@ -52,6 +61,7 @@ class VentaDetallesController extends Controller
     {
         $request->validate([
             'id_transaccion' => 'required',
+            'id_articulo' => 'required',
             'cantidad' => 'required',
             'precio_venta' => ['required', 'string'],
             'descuento' => ['required'],
@@ -69,6 +79,12 @@ class VentaDetallesController extends Controller
                 $updateVentaDetalles->id_transaccion = $request->id_transaccion;
             }
 
+            $ArticuloAll = Articulo::where('state', '=', 1)->where('id', '=', $request->id_articulo)->get();
+            if (count($ArticuloAll) == 0) {
+                return "No existe un curso con ese 'id_articulo' o esta desactivado, porfavor ingrese un 'id_articulo' valido.";
+            } else {
+                $updateVentaDetalles->id_articulo = $request->id_articulo;
+            }
             $updateVentaDetalles->cantidad = $request->cantidad;
             $updateVentaDetalles->precio_venta = $request->precio_venta;
             $updateVentaDetalles->descuento = $request->descuento;

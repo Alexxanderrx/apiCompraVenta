@@ -65,7 +65,6 @@ class ClienteController extends Controller
 
         if (Cliente::find($id) != null) {
             $updateCliente = Cliente::find($id);
-            $updateCliente = Cliente::find($id);
 
             $updateCliente->nombre = $request->nombre;
             $updateCliente->apellidos = $request->apellidos;

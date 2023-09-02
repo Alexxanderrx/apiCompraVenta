@@ -17,6 +17,9 @@ return new class extends Migration
             $table->unsignedBigInteger('id_transaccion');
             $table->foreign('id_transaccion')->references('id')->on('transaccions');
 
+            $table->unsignedBigInteger('id_articulo');
+            $table->foreign('id_articulo')->references('id')->on('articulos');
+
             $table->string('cantidad');
             $table->string('precio_compra');
             $table->string('descuento');

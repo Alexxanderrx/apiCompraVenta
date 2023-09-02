@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\CompraDetallesController;
 use App\Http\Controllers\TrabajadorController;
@@ -52,3 +53,9 @@ Route::get('/compra/{id}', [CompraDetallesController::class, 'getById']);
 Route::post('/compra', [CompraDetallesController::class, 'create']);
 Route::put('/compra/{id}', [CompraDetallesController::class, 'update']);
 Route::delete('/compra/{id}', [CompraDetallesController::class, 'delete']);
+
+Route::get('/articulo', [ArticuloController::class, 'index']);
+Route::get('/articulo/{id}', [ArticuloController::class, 'getById']);
+Route::post('/articulo', [ArticuloController::class, 'create']);
+Route::put('/articulo/{id}', [ArticuloController::class, 'update']);
+Route::delete('/articulo/{id}', [ArticuloController::class, 'delete']);
